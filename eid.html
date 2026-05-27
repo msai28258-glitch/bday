@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eid al-Adha Mubarak</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+        
+        body {
+            min-height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(135deg, #06141f, #12343b, #0b1d26);
+            color: white;
+        }
+        
+        .hero {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 20px;
+            animation: fadeIn 2s ease;
+        }
+        
+        h1 {
+            font-size: 60px;
+            color: #ffd166;
+            text-shadow: 0 0 20px #ffd166;
+        }
+        
+        p {
+            font-size: 20px;
+            margin: 15px 0 30px;
+            max-width: 700px;
+        }
+        
+        button {
+            padding: 15px 35px;
+            border: none;
+            border-radius: 30px;
+            background: #ffd166;
+            color: #06141f;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.4s;
+        }
+        
+        button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px #ffd166;
+        }
+        
+        #wish {
+            margin-top: 25px;
+            color: #90ee90;
+            font-size: 26px;
+        }
+        
+        .moon {
+            position: absolute;
+            top: 60px;
+            right: 100px;
+            width: 90px;
+            height: 90px;
+            background: #ffd166;
+            border-radius: 50%;
+            box-shadow: 0 0 40px #ffd166;
+        }
+        
+        .moon::after {
+            content: "";
+            position: absolute;
+            left: 25px;
+            top: 0;
+            width: 90px;
+            height: 90px;
+            background: #06141f;
+            border-radius: 50%;
+        }
+        
+        .stars::before,
+        .stars::after {
+            content: "✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧";
+            position: absolute;
+            color: white;
+            font-size: 25px;
+            animation: moveStars 6s linear infinite;
+        }
+        
+        .stars::before {
+            top: 120px;
+            left: 80px;
+        }
+        
+        .stars::after {
+            bottom: 100px;
+            right: 80px;
+        }
+        
+        @keyframes moveStars {
+            0% {
+                transform: translateY(0);
+                opacity: 0.5;
+            }
+            50% {
+                transform: translateY(-20px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 0.5;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="moon"></div>
+    <div class="stars"></div>
+
+    <section class="hero">
+
+        <h1>Eid al-Adha Mubarak 🌙</h1>
+
+        <p>
+            May your heart be filled with love, your home with happiness, and your life with endless blessings ✨
+        </p>
+
+        <button onclick="showWish()">
+            Open Blessing ✨
+        </button>
+
+        <h2 id="wish"></h2>
+
+    </section>
+
+    <script>
+        function showWish() {
+            document.getElementById("wish").innerHTML =
+                "🌙 Eid al-Adha Mubarak ✨ <br> May Allah bless you with happiness, peace and success ❤️";
+        }
+    </script>
+
+</body>
+
+</html>
