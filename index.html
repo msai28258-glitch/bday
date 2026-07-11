@@ -1,46 +1,324 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="te">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Popup Login</title>
-
-    <link rel="stylesheet" href="style.css">
+    <title>Hey Beautiful ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+        /* Floating Hearts & Butterflies */
+        
+        .animations {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .float-item {
+            position: absolute;
+            font-size: 24px;
+            animation: floatUp linear infinite;
+        }
+        
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-120px) rotate(360deg);
+            }
+        }
+        
+        .screen {
+            display: none;
+            text-align: center;
+            width: 100%;
+            max-width: 420px;
+            padding: 20px;
+            z-index: 10;
+            position: relative;
+        }
+        
+        .active {
+            display: block;
+        }
+        
+        .cute-character {
+            width: 180px;
+            height: 180px;
+            background: #4a004d;
+            border-radius: 50%;
+            margin: 30px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 110px;
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.4);
+            animation: float 3s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        
+        h1,
+        h2 {
+            font-family: 'Brush Script MT', cursive;
+            color: #fff;
+        }
+        
+        h1 {
+            font-size: 3.4rem;
+            margin: 15px 0;
+        }
+        
+        .compliment-bar {
+            background: rgba(255, 255, 255, 0.08);
+            margin: 12px 0;
+            padding: 18px 20px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s;
+            height: 65px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 10;
+        }
+        
+        .compliment-bar:hover {
+            background: rgba(255, 20, 147, 0.25);
+        }
+        
+        .heart {
+            font-size: 32px;
+            color: #ff69b4;
+            position: absolute;
+        }
+        
+        .message {
+            font-size: 1.1rem;
+            opacity: 0;
+            transition: all 0.5s;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .compliment-bar.revealed .heart {
+            opacity: 0;
+        }
+        
+        .compliment-bar.revealed .message {
+            opacity: 1;
+            color: #fff;
+        }
+        
+        .note {
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            padding: 35px 25px;
+            border-radius: 20px;
+            margin: 20px auto;
+            min-height: 340px;
+            box-shadow: 0 10px 40px rgba(255, 20, 147, 0.6);
+            z-index: 10;
+        }
+        
+        #typingText {
+            text-align: left;
+            line-height: 1.65;
+            font-size: 1.22rem;
+            margin-top: 18px;
+            color: #fffef0;
+        }
+        
+        button {
+            background: linear-gradient(90deg, #ff1493, #ff69b4);
+            color: white;
+            border: none;
+            padding: 16px 45px;
+            border-radius: 50px;
+            font-size: 1.25rem;
+            cursor: pointer;
+            margin-top: 25px;
+            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.6);
+            z-index: 10;
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- Preview Card -->
+    <div class="animations" id="animations"></div>
 
-    <div class="preview" onclick="openLogin()">
-        <img src="c:\Users\Sai Manikanta\Downloads\ChatGPT Image May 16, 2026, 02_15_50 PM.png">
-        <h2>Login Code</h2>
-        <p>Click To Open</p>
+    <!-- Screen 1 -->
+    <div id="screen1" class="screen active">
+        <div class="cute-character">🐻‍❄️</div>
+        <h1>Hey Beautiful</h1>
+        <p style="font-size:1.4rem; margin:15px 0; font-style:italic;">
+            Do you even know how cute you are?
+        </p>
+        <button onclick="startMeasuring()">Open My Heart ❤️</button>
     </div>
 
-    <!-- Popup Login -->
+    <!-- Screen 2 -->
+    <div id="screen2" class="screen">
+        <div style="background:rgba(0,0,0,0.3); padding:25px; border-radius:20px;">
+            <h2>Measuring your cuteness...</h2>
+            <h1 id="percentage" style="color:#fff; font-size:2.5rem;">0%</h1>
+            <div style="background:#222; height:12px; border-radius:10px; overflow:hidden; margin:15px 0;">
+                <div id="progress" style="height:100%; background:linear-gradient(90deg,#ff69b4,#ff1493); width:0%; transition:width 0.15s;"></div>
+            </div>
+            <p id="warning" style="display:none; color:#ff0; font-weight:bold;">⚠️ WARNING: TOO CUTE TO HANDLE</p>
+        </div>
+    </div>
 
-    <div class="popup" id="popup">
-
-        <div class="login-box">
-
-            <span class="close" onclick="closeLogin()">&times;</span>
-
-            <h1>Welcome Back</h1>
-
-            <input type="text" placeholder="Username">
-            <input type="password" placeholder="Password">
-
-            <button>Login</button>
-
-            <a href="#">Forgot Password?</a>
-
+    <!-- Screen 3 -->
+    <div id="screen3" class="screen">
+        <div style="margin-bottom:30px;">
+            <div class="cute-character" style="font-size:70px; width:110px; height:110px;">💖</div>
+            <h1 style="margin:10px 0 5px;">Just for you</h1>
+            <p style="opacity:0.9;">Tap each one to reveal</p>
         </div>
 
+        <div onclick="revealMessage(this)" class="compliment-bar">
+            <span class="heart">♡</span>
+            <span class="message">You look adorable</span>
+        </div>
+        <div onclick="revealMessage(this)" class="compliment-bar">
+            <span class="heart">♡</span>
+            <span class="message">You have the sweetest vibe</span>
+        </div>
+        <div onclick="revealMessage(this)" class="compliment-bar">
+            <span class="heart">♡</span>
+            <span class="message">You make things feel lighter</span>
+        </div>
+        <div onclick="revealMessage(this)" class="compliment-bar">
+            <span class="heart">♡</span>
+            <span class="message">You are naturally charming</span>
+        </div>
+        <div onclick="revealMessage(this)" class="compliment-bar">
+            <span class="heart">♡</span>
+            <span class="message">You make everything feel more special</span>
+        </div>
+
+        <button onclick="showNote()">See more →</button>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Screen 4 -->
+    <div id="screen4" class="screen note">
+        <h2>A little note for you</h2>
+        <div style="font-size:55px; margin:10px 0;">💝</div>
+        <div id="typingText"></div>
+        <button onclick="showFinal()">One more thing →</button>
+    </div>
+
+    <!-- Screen 5 -->
+    <div id="screen5" class="screen">
+        <div class="cute-character" style="font-size:100px;">🐻‍❄️</div>
+        <h1>You'll always be special to me</h1>
+    </div>
+
+    <script>
+        // Floating Animations
+        const floatItems = ['💖', '🦋', '💕', '🦋'];
+
+        function createFloatingItem() {
+            const item = document.createElement('div');
+            item.classList.add('float-item');
+            item.textContent = floatItems[Math.floor(Math.random() * floatItems.length)];
+            item.style.left = Math.random() * 100 + 'vw';
+            item.style.animationDuration = (Math.random() * 8 + 6) + 's';
+            item.style.fontSize = (Math.random() * 18 + 22) + 'px';
+            document.getElementById('animations').appendChild(item);
+            setTimeout(() => item.remove(), 15000);
+        }
+        setInterval(createFloatingItem, 280);
+
+        function revealMessage(bar) {
+            bar.classList.add('revealed');
+            bar.style.pointerEvents = "none";
+        }
+
+        function startMeasuring() {
+            document.getElementById('screen1').classList.remove('active');
+            document.getElementById('screen2').classList.add('active');
+
+            let percent = 0;
+            const prog = document.getElementById('progress');
+            const per = document.getElementById('percentage');
+            const warning = document.getElementById('warning');
+
+            const interval = setInterval(() => {
+                percent += Math.random() * 12 + 8;
+                if (percent > 120) percent = 120;
+                prog.style.width = percent + "%";
+                per.textContent = Math.floor(percent) + "%";
+                if (percent >= 100) warning.style.display = "block";
+                if (percent >= 120) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        document.getElementById('screen2').classList.remove('active');
+                        document.getElementById('screen3').classList.add('active');
+                    }, 1500);
+                }
+            }, 120);
+        }
+
+        function showNote() {
+            document.getElementById('screen3').classList.remove('active');
+            document.getElementById('screen4').classList.add('active');
+
+            const text = `I just wanted to tell you something... you really are special in a way that's hard to explain.
+There's a softness in the way you talk, a sweetness in the way you smile, and something genuine about you that just feels good to be around.
+You don't try to be anything extra, you're just you, and that's what makes you so lovely.`;
+
+            let i = 0;
+            const el = document.getElementById('typingText');
+            el.innerHTML = '';
+
+            const type = setInterval(() => {
+                if (i < text.length) {
+                    el.innerHTML += text[i] === '\n' ? '<br><br>' : text[i];
+                    i++;
+                } else clearInterval(type);
+            }, 45);
+        }
+
+        function showFinal() {
+            document.getElementById('screen4').classList.remove('active');
+            document.getElementById('screen5').classList.add('active');
+        }
+    </script>
 </body>
 
 </html>
