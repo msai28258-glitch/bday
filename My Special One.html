@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="te">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Beautiful 💖</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e, #ff8ec4, #ff6bb5);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            color: #fff;
+            position: relative;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 620px;
+            padding: 2rem;
+            z-index: 10;
+        }
+        
+        .title {
+            font-size: 3.2rem;
+            font-family: 'Dancing Script', cursive;
+            margin: 0;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        button {
+            padding: 16px 45px;
+            font-size: 1.4rem;
+            background: #ff4d94;
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(255, 77, 148, 0.4);
+            margin-top: 30px;
+            transition: transform 0.3s;
+        }
+        
+        button:hover {
+            transform: scale(1.05);
+        }
+        
+        .memories,
+        .message {
+            display: none;
+            margin-top: 30px;
+        }
+        /* 2x3 Grid Fixed */
+        
+        .memories-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, auto);
+            gap: 16px;
+            max-width: 100%;
+        }
+        
+        .memories-grid img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            transition: transform 0.4s;
+        }
+        
+        .memories-grid img:hover {
+            transform: scale(1.08);
+        }
+        
+        .quote {
+            font-size: 1.35rem;
+            line-height: 1.8;
+            font-style: italic;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            padding: 2.5rem;
+            border-radius: 25px;
+            border-left: 6px solid #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Step 1 -->
+    <div class="container" id="step1">
+        <h1 class="title">Happy Birthday<br>Bhagyashri Borse 💖</h1>
+        <p style="font-size:1.35rem;margin:25px 0;">
+            May your day be filled with joy, laughter, and all the things that make you smile.
+        </p>
+        <button onclick="startCelebration()">Start the Celebration ✨</button>
+    </div>
+
+    <!-- Step 2: 2x3 Photos -->
+    <div class="container memories" id="step2">
+        <h2 class="title" style="font-size:2.6rem;">Our Beautiful Memories 💕</h2>
+        <div class="memories-grid">
+            <img src="https://static.asianetnews.com/images/w-690,imgid-01kx3cn7ss51axcn2mx6dja1nc,imgname-who-is-bhagyashri-borse9-1783599111993.jpg" alt="">
+            <img src="https://filmfare.wwmindia.com/content/2026/jul/bhagyashriborselenin1784025907.jpg" alt="">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXzf0Ez_C7TikWCvchJhilAdC1P0hnk-II7tGTDNMPV3dRSma_e4cVRbY&s=10" alt="">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZMpPczSjr0sG3DSDRqewPVz5MxRDY-QnC3R-tDmlNmA&s" alt="">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2bBm8jEV3zOcwHf5uaPvoWoGS-XARKxWU9ohexKo6HbrVzZmF2fW4mF0&s=10" alt="">
+            <img src="https://southindianactress.in/wp-content/uploads/2026/07/BhagyaShri-Borse-40-480x720.jpg" alt="">
+        </div>
+        <button onclick="showMessage()" style="margin-top:35px;">A Special Message 💌</button>
+    </div>
+
+    <!-- Step 3: Quotation -->
+    <div class="container message" id="step3">
+        <div class="quote">
+            <h2 class="title" style="font-size:2.4rem; margin-bottom:20px;">For You Bhagyashri ✨</h2>
+            <p>
+                "Today is not just your birthday, it's a celebration of the beautiful soul you are. May your life be filled with as much happiness as you bring to others. Keep shining, keep smiling, and keep making the world a better place with your presence."
+            </p>
+            <p style="margin-top:20px; font-size:1.1rem; opacity:0.9;">
+                Wishing you a year full of love, success, and all your dreams coming true.<br> Happy Birthday once again! 💖
+            </p>
+        </div>
+    </div>
+
+    <canvas id="canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;"></canvas>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let items = [];
+
+        function createItem() {
+            const isHeart = Math.random() > 0.4;
+            return {
+                x: Math.random() * canvas.width,
+                y: canvas.height + 50,
+                size: Math.random() * 22 + 14,
+                speed: Math.random() * 2.5 + 1.5,
+                type: isHeart ? '❤️' : '🦋',
+                rotation: Math.random() * 360,
+                rotSpeed: Math.random() * 0.08 - 0.04
+            };
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = items.length - 1; i >= 0; i--) {
+                let item = items[i];
+                item.y -= item.speed;
+                item.x += Math.sin(item.y / 40) * 1.2;
+                item.rotation += item.rotSpeed;
+
+                ctx.save();
+                ctx.translate(item.x, item.y);
+                ctx.rotate(item.rotation * Math.PI / 180);
+                ctx.font = `${item.size}px Arial`;
+                ctx.fillText(item.type, -item.size / 2, item.size / 2);
+                ctx.restore();
+
+                if (item.y < -50) items.splice(i, 1);
+            }
+            requestAnimationFrame(animate);
+        }
+
+        function startCelebration() {
+            document.getElementById('step1').style.display = 'none';
+            document.getElementById('step2').style.display = 'block';
+            launchItems(45);
+        }
+
+        function showMessage() {
+            document.getElementById('step2').style.display = 'none';
+            document.getElementById('step3').style.display = 'block';
+            launchItems(40);
+        }
+
+        function launchItems(count) {
+            for (let i = 0; i < count; i++) items.push(createItem());
+        }
+
+        window.onload = () => {
+            animate();
+            setTimeout(() => launchItems(20), 500);
+        };
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+
+</html>
